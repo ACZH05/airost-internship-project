@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL
+
 export interface ChatMessage {
   id: string;
   text: string;
@@ -12,7 +14,7 @@ export interface ChatMessage {
 
 export const sendMessage = async (text: string | null, userId: string, groupId: string, idToken: string, fileMetadata?: any) => {
   try {
-    let endpoint = 'http://localhost:3000/api/chat/send';
+    let endpoint = `${API_URL}chat/send`;
     let headers: HeadersInit = {
       'Authorization': `Bearer ${idToken}`,
       'Content-Type': 'application/json'
@@ -44,7 +46,7 @@ export const sendMessage = async (text: string | null, userId: string, groupId: 
 
 export const getGroups = async (idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/groups', {
+    const response = await fetch(`${API_URL}chat/groups`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -59,7 +61,7 @@ export const getGroups = async (idToken: string) => {
 
 export const getMessages = async (groupId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/chat/messages/${groupId}`, {
+    const response = await fetch(`${API_URL}chat/messages/${groupId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -74,7 +76,7 @@ export const getMessages = async (groupId: string, idToken: string) => {
 
 export const createGroup = async (name: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/groups', {
+    const response = await fetch(`${API_URL}chat/groups`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ export interface GroupMember {
 
 export const getGroupMembers = async (groupId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/chat/members?groupId=${groupId}`, {
+    const response = await fetch(`${API_URL}chat/members?groupId=${groupId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -113,7 +115,7 @@ export const getGroupMembers = async (groupId: string, idToken: string) => {
 
 export const addGroupMember = async (groupId: string, email: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/members', {
+    const response = await fetch(`${API_URL}chat/members`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

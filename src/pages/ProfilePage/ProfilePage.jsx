@@ -68,7 +68,7 @@ const ProfilePage = () => {
           <div className="flex flex-col items-center mb-6">
             <div className="relative">
               <img
-                src={profile.profilePictureUrl || "src/assets/Default_pfp.svg"}
+                src={profile.profilePictureUrl || "https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d"}
                 alt="Profile"
                 className="w-32 h-32 rounded-full object-cover"
               />

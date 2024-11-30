@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL
+
 export const uploadFile = async (file, groupId, idToken) => {
     if (!file || !groupId || !idToken) {
         throw new Error('Missing required parameters');
@@ -12,7 +14,7 @@ export const uploadFile = async (file, groupId, idToken) => {
     formData.append('file', file);
     formData.append('groupId', groupId);
 
-    const response = await fetch('http://localhost:3000/api/file/upload', {
+    const response = await fetch(`${API_URL}file/upload`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${idToken}`,

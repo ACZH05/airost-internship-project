@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+const API_URL = import.meta.env.VITE_API_URL
+
 export default function DeleteUsersPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +22,7 @@ export default function DeleteUsersPage() {
     setSuccess(false);
 
     try {
-      const response = await fetch('http://localhost:3000/api/admin/delete-users', {
+      const response = await fetch(`${API_URL}admin/delete-users`, {
         method: 'DELETE',
       });
 

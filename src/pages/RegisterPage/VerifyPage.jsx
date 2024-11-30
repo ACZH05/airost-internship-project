@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const VerifyEmail = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -16,7 +18,7 @@ const VerifyEmail = () => {
       try {
         setIsLoading(true);
 
-        const response = await fetch('http://localhost:3000/api/auth/verify', 
+        const response = await fetch(`${API_URL}auth/verify`, 
         { method: 'POST', 
           headers: { 'Content-Type': 'application/json', }, 
           body: JSON.stringify({ oobCode }), 
