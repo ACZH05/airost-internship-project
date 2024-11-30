@@ -19,8 +19,8 @@ export async function generateOOBCode(email: string, uid:string) {
   return oobCode; 
 }
 
-export async function sendVerificationEmail(email:string, oobCode:string) {
-    let transporter = nodemailer.createTransport({
+export async function sendVerificationEmail(email: string, oobCode: string) {
+    const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
         user: process.env.EMAIL_NAME,
@@ -28,7 +28,7 @@ export async function sendVerificationEmail(email:string, oobCode:string) {
       }
     });
   
-    let mailOptions = {
+    const mailOptions = {
       from: process.env.EMAIL_NAME,
       to: email,
       subject: 'Verify your email',
@@ -52,8 +52,8 @@ export async function generateResetCode(email: string) {
   return resetCode; 
 }
 
-export async function sendPasswordResetEmail(email:string, resetCode:string) {
-  let transporter = nodemailer.createTransport({
+export async function sendPasswordResetEmail(email: string, resetCode: string) {
+  const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: process.env.EMAIL_NAME,
@@ -61,7 +61,7 @@ export async function sendPasswordResetEmail(email:string, resetCode:string) {
     }
   });
 
-  let mailOptions = {
+  const mailOptions = {
     from: process.env.EMAIL_NAME,
     to: email,
     subject: 'Reset your password',

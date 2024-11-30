@@ -5,6 +5,24 @@ import { uploadFile } from '@/lib/uploadUtils';
 
 const db = adminFirestore;
 
+interface MessageData {
+    userId: string;
+    groupId: string;
+    text?: string;
+    fileId?: string;
+    fileName?: string;
+    fileUrl?: string;
+    fileType?: string;
+    timestamp: Timestamp;
+}
+
+interface FileMetadata {
+    id: string;
+    fileName: string;
+    fileUrl: string;
+    fileType: string;
+}
+
 export async function POST(req: NextRequest) {
     try {
         const authHeader = req.headers.get('authorization');
@@ -15,8 +33,8 @@ export async function POST(req: NextRequest) {
         const token = authHeader.split('Bearer ')[1];
         const decodedToken = await adminAuth.verifyIdToken(token);
 
-        let messageData: any;
-        let fileMetadata: any;
+        let messageData: MessageData;
+        let fileMetadata: FileMetadata | undefined;
         
         const contentType = req.headers.get('content-type') || '';
         
@@ -102,7 +120,7 @@ export async function POST(req: NextRequest) {
             success: true,
             message: 'Message sent successfully',
             messageId: messageRef.id,
-            fileId: fileMetadata?.fileId
+            fileId: fileMetadata?.id  // Changed from fileId to id
         });
     } catch (error) {
         console.error('Error processing message:', error);

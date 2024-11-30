@@ -4,7 +4,7 @@ import { generateOOBCode, sendVerificationEmail } from '@/lib/actions';
 
 const db = adminFirestore;
 
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest) {
     const { idToken, email } = await req.json();
 
     if (!email || !idToken ) {

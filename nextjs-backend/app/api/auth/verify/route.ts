@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest) {
     const { oobCode } = await req.json();
 
     if (!oobCode) {
@@ -46,5 +46,5 @@ export async function POST(req: NextRequest, res:NextResponse) {
       return new NextResponse(JSON.stringify({error: "Error verifying email"}), {status:500});
     }
 }
-      
-  
+
+

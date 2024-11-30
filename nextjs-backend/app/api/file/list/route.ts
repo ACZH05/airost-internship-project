@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from 'next/server';
 import { adminAuth, adminFirestore } from "@/firebase-server";
 
@@ -16,7 +15,7 @@ export async function GET(request: NextRequest) {
         }
 
         const token = authHeader.split('Bearer ')[1];
-        const decodedToken = await adminAuth.verifyIdToken(token);
+        await adminAuth.verifyIdToken(token); // Just verify, don't store result
 
         // Query files for the user
         const filesSnapshot = await adminFirestore

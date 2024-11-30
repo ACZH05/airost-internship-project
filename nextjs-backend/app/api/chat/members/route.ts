@@ -35,9 +35,15 @@ export async function GET(req: NextRequest) {
 
         const members = await Promise.all(memberPromises);
         return NextResponse.json({ success: true, members }, { status: 200 });
-    } catch (error) {
+    } catch (error: unknown) {
+        console.error('Error getting members:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
+}
+
+interface CustomError {
+    code: string;
+    message: string;
 }
 
 // Add member to group
@@ -72,10 +78,11 @@ export async function POST(req: NextRequest) {
             success: true, 
             message: 'Member added successfully' 
         }, { status: 200 });
-    } catch (error) {
-        if ((error as any).code === 'auth/user-not-found') {
+    } catch (error: unknown) {
+        if ((error as CustomError).code === 'auth/user-not-found') {
             return NextResponse.json({ error: 'User not found' }, { status: 404 });
         }
+        console.error('Error adding member:', error);
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }

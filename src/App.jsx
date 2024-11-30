@@ -28,7 +28,7 @@ const App = () => {
               <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
               <Route path="/reset" element={<ResetPasswordPage />} />
 
-              <Route path="/delete-uers" element={<DeleteUsersPage />} />
+              <Route path="/delete-users" element={<DeleteUsersPage />} />
 
               {/* Public/Auth Routes */}
               <Route element={<PublicRoute />}>
