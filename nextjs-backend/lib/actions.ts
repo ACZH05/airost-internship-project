@@ -32,7 +32,7 @@ export async function sendVerificationEmail(email: string, oobCode: string) {
       from: process.env.EMAIL_NAME,
       to: email,
       subject: 'Verify your email',
-      text: `Click this link to verify your email: http://localhost:5173/verify?oobCode=${oobCode}`
+      text: `Click this link to verify your email: ${process.env.NEXT_PUBLIC_APP_URL}/verify?oobCode=${oobCode}`
     };
   
     await transporter.sendMail(mailOptions);
@@ -65,7 +65,7 @@ export async function sendPasswordResetEmail(email: string, resetCode: string) {
     from: process.env.EMAIL_NAME,
     to: email,
     subject: 'Reset your password',
-    text: `Click this link to reset your password: http://localhost:5173/reset?resetCode=${resetCode}`
+    text: `Click this link to reset your password: ${process.env.NEXT_PUBLIC_APP_URL}/reset?resetCode=${resetCode}`
   };
 
   await transporter.sendMail(mailOptions);
