@@ -7,6 +7,8 @@ import { useAuth } from '../../contexts/AuthContext';
 import TodoTab from "../../components/Todo/TodoTab";
 import FileTab from "../../components/FileTab";
 import { useProfiles } from '../../contexts/ProfileContext';
+import Dropdown from 'react-bootstrap/Dropdown'
+import GroupDropDownComponent from "../../components/GroupDropDownComponent";
 
 function NavBar({ groupName, activeTab, setActiveTab, showMember, setShowMember, onVideoCall }) {
   return (
@@ -228,8 +230,19 @@ function MainPage() {
     return (
       <div className="flex h-screen text-[16px] text-text">
         <div className="basis-1/4 bg-shade-500 flex flex-col">
-          <div className="flex items-center text-[24px] font-bold h-16 px-[23px] py-[9px] border-b-[3px] border-[rgba(0,0,0,0.25)]">
-            Groups
+          <div className="flex justify-between items-center h-16 px-6 py-[9px] border-b-[3px] border-[rgba(0,0,0,0.25)]">
+            <div className="text-[24px] font-bold ">Groups</div>
+            <GroupDropDownComponent>
+              <form onSubmit={handleCreateGroup} className="">
+                <input
+                  type="text"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  placeholder="New group name"
+                  className="w-full px-3 py-2 bg-shade-400 rounded-md focus:ring-0 mt-2"
+                />
+              </form>
+            </GroupDropDownComponent>
           </div>
           <div className="overflow-y-auto flex-grow">
             {groups.map(group => (
@@ -242,15 +255,6 @@ function MainPage() {
               </div>
             ))}
           </div>
-          <form onSubmit={handleCreateGroup} className="p-4 border-t-2 border-shade-400">
-            <input
-              type="text"
-              value={newGroupName}
-              onChange={(e) => setNewGroupName(e.target.value)}
-              placeholder="New group name"
-              className="w-full px-3 py-2 bg-shade-300 rounded-md"
-            />
-          </form>
         </div>
         <div className="basis-3/4 bg-shade-400">
           <NavBar
