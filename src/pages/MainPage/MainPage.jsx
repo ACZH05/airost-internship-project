@@ -114,7 +114,7 @@ function MemberList({ groupId }) {
           value={newMemberEmail}
           onChange={(e) => setNewMemberEmail(e.target.value)}
           placeholder="Add member by email"
-          className="w-full px-3 py-2 bg-shade-300 rounded-md"
+          className="w-full px-3 py-2 bg-shade-300 border-0 focus:ring-0 placeholder:italic placeholder:text-text rounded-md"
         />
       </form>
     </div>
@@ -239,7 +239,7 @@ function MainPage() {
                   value={newGroupName}
                   onChange={(e) => setNewGroupName(e.target.value)}
                   placeholder="New group name"
-                  className="w-full px-3 py-2 bg-shade-400 rounded-md focus:ring-0 mt-2"
+                  className="w-full px-3 py-2 mt-2 bg-shade-400 border-0 focus:ring-0 placeholder:italic placeholder:text-text rounded-md"
                 />
               </form>
             </GroupDropDownComponent>
