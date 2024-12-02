@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getGroups, createGroup, getGroupMembers, addGroupMember } from "../../lib/chat";
 import ChatTab from "../../components/Chat/ChatTab";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -7,7 +7,6 @@ import { useAuth } from '../../contexts/AuthContext';
 import TodoTab from "../../components/Todo/TodoTab";
 import FileTab from "../../components/FileTab";
 import { useProfiles } from '../../contexts/ProfileContext';
-import Dropdown from 'react-bootstrap/Dropdown'
 import GroupDropDownComponent from "../../components/GroupDropDownComponent";
 
 function NavBar({ groupName, activeTab, setActiveTab, showMember, setShowMember, onVideoCall }) {
@@ -131,7 +130,6 @@ function MainPage() {
   const showMember = searchParams.get("member") === "true" || false
   const groupId = searchParams.get("group")
   const [newGroupName, setNewGroupName] = useState("");
-  const navigate = useNavigate();
 
   const setActiveTab = (tab) => {
     searchParams.set("tab", tab)
@@ -248,7 +246,7 @@ function MainPage() {
             {groups.map(group => (
               <div
                 key={group.id}
-                className={`p-4 cursor-pointer hover:bg-shade-400 ${selectedGroup?.id === group.id ? 'bg-shade-400' : ''}`}
+                className={`p-4 font-bold cursor-pointer hover:bg-shade-400 ${selectedGroup?.id === group.id ? 'bg-shade-400' : ''}`}
                 onClick={() => handleGroupSelect(group)}
               >
                 {group.name}
