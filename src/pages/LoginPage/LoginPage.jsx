@@ -1,5 +1,5 @@
 import { loginUser, checkUserStatus } from "../../lib/action";
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function LoginPage() {
@@ -56,7 +56,7 @@ function LoginPage() {
 
           <div className="flex flex-col">
               <label className="mt-[32px] font-bold">Email</label>
-              <input id="email" name="email" type="text" className="border-0 mt-[10px] px-[12px] py-[8px] bg-shade-300 placeholder-text italic rounded-[5px] focus:ring-0" placeholder="example@domain.com" />
+              <input id="email" name="email" type="text" className="border-0 mt-[10px] px-[12px] py-[8px] bg-shade-300 placeholder-text placeholder:italic rounded-[5px] focus:ring-0" placeholder="example@domain.com" />
               { errors.email && 
               errors.email.map((error) => (
               <p className="error mt-[4px] text-[14px] text-error italic" key={error}>
@@ -67,7 +67,7 @@ function LoginPage() {
           <div className="flex flex-col">
             <div className="flex flex-col">
                 <label className="mt-[32px] font-bold">Password</label>
-                <input id="password" name="password" type="password" className="border-0 mt-[10px] px-[12px] py-[8px] bg-shade-300 placeholder-text italic rounded-[5px] focus:ring-0" placeholder="Must have at least 8 characters" />
+                <input id="password" name="password" type="password" className="border-0 mt-[10px] px-[12px] py-[8px] bg-shade-300 placeholder-text placeholder:italic rounded-[5px] focus:ring-0" placeholder="Must have at least 8 characters" />
                 {errors.password && <p className="error mt-[4px] text-[14px] text-error italic">** {errors.password}</p>}
             </div>
             <div className="mt-[4px] flex text-[14px] italic justify-between">
