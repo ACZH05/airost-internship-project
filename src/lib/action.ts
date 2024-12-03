@@ -328,3 +328,4 @@ export const updateProfilePicture = async (idToken: string, file: File) => {
     return { success: false, message: 'An error occurred while updating profile picture' };
   }
 };
+

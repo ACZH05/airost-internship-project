@@ -86,3 +86,55 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+
+// Leave group
+export async function DELETE(req: NextRequest) {
+    try {
+        const groupId = req.nextUrl.searchParams.get('groupId');
+        const authHeader = req.headers.get('authorization');
+        if (!authHeader?.startsWith('Bearer ')) {
+            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+        }
+
+        const token = authHeader.split('Bearer ')[1];
+        const decodedToken = await adminAuth.verifyIdToken(token);
+
+        const groupRef = db.collection('groups').doc(groupId!);
+        const groupDoc = await groupRef.get();
+
+        if (!groupDoc.exists) {
+            return NextResponse.json({ error: 'Group not found' }, { status: 404 });
+        }
+
+        const groupData = groupDoc.data()!;
+        
+        // Check if user is the last admin
+        if (groupData.admins.includes(decodedToken.uid) && groupData.admins.length === 1) {
+            // If there are other members, make someone else admin
+            if (groupData.members.length > 1) {
+                const newAdmin = groupData.members.find((m: string) => m !== decodedToken.uid);
+                await groupRef.update({
+                    members: groupData.members.filter((m: string) => m !== decodedToken.uid),
+                    admins: [newAdmin]
+                });
+            } else {
+                // If user is the last member, delete the group
+                await groupRef.delete();
+            }
+        } else {
+            // Remove user from members and admins
+            await groupRef.update({
+                members: groupData.members.filter((m: string) => m !== decodedToken.uid),
+                admins: groupData.admins.filter((a: string) => a !== decodedToken.uid)
+            });
+        }
+
+        return NextResponse.json({ 
+            success: true, 
+            message: 'Left group successfully' 
+        }, { status: 200 });
+    } catch (error) {
+        console.error('Error leaving group:', error);
+        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    }
+}
