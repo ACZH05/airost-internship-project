@@ -29,7 +29,7 @@ function ForgetPasswordPage() {
           
           <div className="flex flex-col">
               <label className="mt-8 font-bold">Email</label>
-              <input id="email" name="email" type="text" className="text-[12px] border-0 mt-[10px] px-[8px] py-[6px] h-[30px] bg-shade-300 placeholder-text placeholder:italic rounded-[5px] focus:ring-0" placeholder="example@domain.com" />
+              <input id="email" name="email" type="text" className="border-0 mt-[10px] px-[12px] py-[8px] bg-shade-300 placeholder-text placeholder:italic rounded-[5px] focus:ring-0" placeholder="example@domain.com" />
           </div>
 
           { errors.email && 

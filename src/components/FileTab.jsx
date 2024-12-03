@@ -378,7 +378,7 @@ function FileTab({ groupId }) {
                                     </div>
                                     <div className="flex-1 min-w-0">
                                         <p className="font-medium mb-1">{file.fileName}</p>
-                                        <p className="text-sm text-gray-500">
+                                        <p className="text-sm text-shade-100">
                                             {formatFileSize(file.fileSize)} • {formatTimestamp(file.uploadedAt)} •
                                             Uploaded by {userDisplayNames[file.uploadedBy] || file.uploadedBy}
                                         </p>
@@ -499,7 +499,7 @@ function FileTab({ groupId }) {
                                 />
                                 <button
                                     onClick={() => fileInputRef.current?.click()}
-                                    className="text-blue-500 hover:text-blue-600 font-medium px-4 py-2"
+                                    className="text-primary-tint-300 hover:text-primary-tint-400 font-medium px-4 py-2"
                                 >
                                     Select File
                                 </button>

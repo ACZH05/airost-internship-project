@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { getGroups, createGroup, getGroupMembers, addGroupMember } from "../../lib/chat";
 import ChatTab from "../../components/Chat/ChatTab";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -7,6 +7,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import TodoTab from "../../components/Todo/TodoTab";
 import FileTab from "../../components/FileTab";
 import { useProfiles } from '../../contexts/ProfileContext';
+import GroupDropDownComponent from "../../components/GroupDropDownComponent";
 
 function NavBar({ groupName, activeTab, setActiveTab, showMember, setShowMember, onVideoCall }) {
   return (
@@ -112,7 +113,7 @@ function MemberList({ groupId }) {
           value={newMemberEmail}
           onChange={(e) => setNewMemberEmail(e.target.value)}
           placeholder="Add member by email"
-          className="w-full px-3 py-2 bg-shade-300 rounded-md"
+          className="w-full px-3 py-2 bg-shade-300 border-0 focus:ring-0 placeholder:italic placeholder:text-text rounded-md"
         />
       </form>
     </div>
@@ -129,7 +130,6 @@ function MainPage() {
   const showMember = searchParams.get("member") === "true" || false
   const groupId = searchParams.get("group")
   const [newGroupName, setNewGroupName] = useState("");
-  const navigate = useNavigate();
 
   const setActiveTab = (tab) => {
     searchParams.set("tab", tab)
@@ -217,7 +217,16 @@ function MainPage() {
           return "chat"
       }
     } else {
-      return <h1>Select a group</h1>;
+      return (
+        <div className="flex flex-col items-center justify-center w-full">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#44C588" className="size-[128px]">
+            <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
+          </svg>
+
+          <div className="text-[24px]">It looks empty... Please select or create new group to get start</div>
+        </div>
+
+      ) 
     }
   }
 
@@ -228,29 +237,31 @@ function MainPage() {
     return (
       <div className="flex h-screen text-[16px] text-text">
         <div className="basis-1/4 bg-shade-500 flex flex-col">
-          <div className="flex items-center text-[24px] font-bold h-16 px-[23px] py-[9px] border-b-[3px] border-[rgba(0,0,0,0.25)]">
-            Groups
+          <div className="flex justify-between items-center h-16 px-6 py-[9px] border-b-[3px] border-[rgba(0,0,0,0.25)]">
+            <div className="text-[24px] font-bold ">Groups</div>
+            <GroupDropDownComponent>
+              <form onSubmit={handleCreateGroup} className="">
+                <input
+                  type="text"
+                  value={newGroupName}
+                  onChange={(e) => setNewGroupName(e.target.value)}
+                  placeholder="New group name"
+                  className="w-full px-3 py-2 mt-2 bg-shade-400 border-0 focus:ring-0 placeholder:italic placeholder:text-text rounded-md"
+                />
+              </form>
+            </GroupDropDownComponent>
           </div>
           <div className="overflow-y-auto flex-grow">
             {groups.map(group => (
               <div
                 key={group.id}
-                className={`p-4 cursor-pointer hover:bg-shade-400 ${selectedGroup?.id === group.id ? 'bg-shade-400' : ''}`}
+                className={`p-4 font-bold cursor-pointer hover:bg-shade-400 ${selectedGroup?.id === group.id ? 'bg-shade-400' : ''}`}
                 onClick={() => handleGroupSelect(group)}
               >
                 {group.name}
               </div>
             ))}
           </div>
-          <form onSubmit={handleCreateGroup} className="p-4 border-t-2 border-shade-400">
-            <input
-              type="text"
-              value={newGroupName}
-              onChange={(e) => setNewGroupName(e.target.value)}
-              placeholder="New group name"
-              className="w-full px-3 py-2 bg-shade-300 rounded-md"
-            />
-          </form>
         </div>
         <div className="basis-3/4 bg-shade-400">
           <NavBar
