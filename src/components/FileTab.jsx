@@ -5,6 +5,8 @@ import { FaDownload, FaFile, FaTimes, FaFileImage, FaFilePdf, FaFileWord, FaFile
 import { uploadFile } from '../lib/fileUpload';
 import { useProfiles } from '../contexts/ProfileContext';
 
+const API_URL = import.meta.env.VITE_API_URL
+
 function FileTab({ groupId }) {
     const { user } = useAuth();
     const { getProfile } = useProfiles();
@@ -72,7 +74,7 @@ function FileTab({ groupId }) {
 
         try {
             const idToken = await user.getIdToken();
-            const response = await fetch(`http://localhost:3000/api/file/list?groupId=${groupId}`, {
+            const response = await fetch(`${API_URL}file/list?groupId=${groupId}`, {
                 headers: {
                     'Authorization': `Bearer ${idToken}`
                 },
@@ -143,7 +145,7 @@ function FileTab({ groupId }) {
     const handleDelete = async (fileId, key) => {
         try {
             const idToken = await user.getIdToken();
-            const response = await fetch(`http://localhost:3000/api/file/delete`, {
+            const response = await fetch(`${API_URL}file/delete`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${idToken}`,
@@ -169,7 +171,7 @@ function FileTab({ groupId }) {
             const idToken = await user.getIdToken();
             await Promise.all(selectedFiles.map(fileId => {
                 const file = files.find(f => f.id === fileId);
-                return fetch(`http://localhost:3000/api/file/delete`, {
+                return fetch(`${API_URL}file/delete`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${idToken}`,

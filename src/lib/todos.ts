@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL
+
 export interface Todo {
   id: string;
   text: string;
@@ -10,7 +12,7 @@ export interface Todo {
 
 export const sendTodo = async (text: string, groupId: string, idToken: string) => {
   try {
-    const apiResponse = await fetch('http://localhost:3000/api/todo/send', {
+    const apiResponse = await fetch(`${API_URL}todo/send`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -34,7 +36,7 @@ export const sendTodo = async (text: string, groupId: string, idToken: string) =
 
 export const getTodos = async (groupId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/todo?groupId=${groupId}`, {
+    const response = await fetch(`${API_URL}todo?groupId=${groupId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -49,7 +51,7 @@ export const getTodos = async (groupId: string, idToken: string) => {
 
 export const updateTodoStatus = async (todoId: string, newStatus: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/todo', {
+    const response = await fetch(`${API_URL}todo`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ export const updateTodoStatus = async (todoId: string, newStatus: string, idToke
 
 export const deleteTodo = async (todoId: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/todo', {
+    const response = await fetch(`${API_URL}todo`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -85,7 +87,7 @@ export const deleteTodo = async (todoId: string, idToken: string) => {
 
 export const assignTodo = async (todoId: string, assignedTo: string[], idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/todo/assign', {
+    const response = await fetch(`${API_URL}todo/assign`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -103,7 +105,7 @@ export const assignTodo = async (todoId: string, assignedTo: string[], idToken: 
 
 export const getUserProfile = async (userId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/profile/info/${userId}`, {
+    const response = await fetch(`${API_URL}profile/info/${userId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }

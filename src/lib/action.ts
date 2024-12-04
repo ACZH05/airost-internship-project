@@ -2,6 +2,8 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } f
 import { auth } from "../../firebase-client";
 import { registerSchema, loginSchema, resetEmailSchema, resetPasswordSchema, setupProfileSchema } from "./schema";
 
+const API_URL = import.meta.env.VITE_API_URL
+
 const errorMessages = {
   'auth/invalid-credential': 'Invalid credential provided. Please try again.',
   'auth/user-not-found': 'No user found with this email. Please check your email or sign up.',
@@ -30,7 +32,7 @@ export const registerUser = async (email: string, password: string, confirmPassw
     console.log('User has been signed up');
 
     const idToken = await userCredential.user.getIdToken();
-    const response = await fetch('http://localhost:3000/api/auth/register',
+    const response = await fetch(`${API_URL}auth/register`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
@@ -85,7 +87,7 @@ export const loginUser = async (email: string, password: string) => {
     console.log('User has been signed in')
     const idToken = await userCredential.user.getIdToken();
 
-    const response = await fetch('http://localhost:3000/api/auth/login',
+    const response = await fetch(`${API_URL}auth/login`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
@@ -121,7 +123,7 @@ export const emailVerification = async (userCredential) => {
     const idToken = await user.getIdToken();
     const email = await user.email;
 
-    const response = await fetch('http://localhost:3000/api/auth/verify/confirmation',
+    const response = await fetch(`${API_URL}auth/verify/confirmation`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', },
@@ -161,7 +163,7 @@ export const sendResetPasswordEmail = async (email: string) => {
   }
 
   try {
-    const response = await fetch('http://localhost:3000/api/auth/reset/send-reset-email', {
+    const response = await fetch(`${API_URL}auth/reset/send-reset-email`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -196,7 +198,7 @@ export const userResetPassword = async (resetCode: string, password: string, con
   const newPassword = password;
 
   try {
-    const response = await fetch('http://localhost:3000/api/auth/reset', {
+    const response = await fetch(`${API_URL}auth/reset`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -217,7 +219,7 @@ export const userResetPassword = async (resetCode: string, password: string, con
 
 export const checkUserStatus = async (idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/profile/user-status', {
+    const response = await fetch(`${API_URL}profile/user-status`, {
       method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -262,7 +264,7 @@ export const setupProfile = async (userCredential, fname: string, lname: string,
     const user = userCredential.user;
     const idToken = await user.getIdToken();
 
-    const response = await fetch('http://localhost:3000/api/profile/set-up', {
+    const response = await fetch(`${API_URL}profile/set-up`, {
       method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -284,7 +286,7 @@ export const setupProfile = async (userCredential, fname: string, lname: string,
 
 export const getProfileInfo = async (idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/profile/info', {
+    const response = await fetch(`${API_URL}profile/info`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -308,7 +310,7 @@ export const updateProfilePicture = async (idToken: string, file: File) => {
     const formData = new FormData();
     formData.append('file', file);
 
-    const response = await fetch('http://localhost:3000/api/profile/update-picture', {
+    const response = await fetch(`${API_URL}profile/update-picture`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${idToken}`
@@ -326,3 +328,4 @@ export const updateProfilePicture = async (idToken: string, file: File) => {
     return { success: false, message: 'An error occurred while updating profile picture' };
   }
 };
+

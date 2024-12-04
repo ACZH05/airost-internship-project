@@ -1,11 +1,16 @@
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 import { adminAuth, adminFirestore } from "@/firebase-server";
-import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-export async function GET(req: NextRequest, { params }: { params: { groupId: string } }) {
+export async function GET(
+    req: NextRequest,
+    { params } : { params: Promise<{ groupId: string }> }
+) {
     try {
-        const { groupId } = await params;
+        const {groupId} = await params;
+
         const authHeader = req.headers.get('authorization');
         if (!authHeader?.startsWith('Bearer ')) {
             return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -44,3 +49,4 @@ export async function GET(req: NextRequest, { params }: { params: { groupId: str
         return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
+

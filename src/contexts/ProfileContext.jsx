@@ -19,7 +19,7 @@ export function ProfileProvider({ children }) {
     if (result.success) {
       const profile = {
         username: `${result.profile.firstName} ${result.profile.lastName}`,
-        profilePicture: result.profile.profilePictureUrl || 'src/assets/Default_pfp.svg'
+        profilePicture: result.profile.profilePictureUrl || 'https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d'
       };
       setProfiles(prev => ({ ...prev, [userId]: profile }));
       return profile;

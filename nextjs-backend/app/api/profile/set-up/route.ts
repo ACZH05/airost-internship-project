@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest) {
     const { idToken, fname, lname, areaCode, phoneNo} = await req.json();
 
     try {

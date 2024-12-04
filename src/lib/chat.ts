@@ -1,3 +1,5 @@
+const API_URL = import.meta.env.VITE_API_URL
+
 export interface ChatMessage {
   id: string;
   text: string;
@@ -12,7 +14,7 @@ export interface ChatMessage {
 
 export const sendMessage = async (text: string | null, userId: string, groupId: string, idToken: string, fileMetadata?: any) => {
   try {
-    let endpoint = 'http://localhost:3000/api/chat/send';
+    let endpoint = `${API_URL}chat/send`;
     let headers: HeadersInit = {
       'Authorization': `Bearer ${idToken}`,
       'Content-Type': 'application/json'
@@ -44,7 +46,7 @@ export const sendMessage = async (text: string | null, userId: string, groupId: 
 
 export const getGroups = async (idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/groups', {
+    const response = await fetch(`${API_URL}chat/groups`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -59,7 +61,7 @@ export const getGroups = async (idToken: string) => {
 
 export const getMessages = async (groupId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/chat/messages/${groupId}`, {
+    const response = await fetch(`${API_URL}chat/messages/${groupId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -72,9 +74,25 @@ export const getMessages = async (groupId: string, idToken: string) => {
   }
 };
 
+export const getLastMessage = async (groupId: string, idToken: string) => {
+  try {
+    const response = await fetch(`${API_URL}chat/lastmessages/${groupId}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${idToken}`
+      }
+    });
+    if (!response.ok) throw new Error('Failed to fetch last message');
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching last message:', error);
+    return { success: false, error };
+  }
+};
+
 export const createGroup = async (name: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/groups', {
+    const response = await fetch(`${API_URL}chat/groups`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -90,6 +108,32 @@ export const createGroup = async (name: string, idToken: string) => {
   }
 };
 
+export const updateGroup = async (groupId: string, idToken: string, name?: string, file?: File) => {
+  try {
+    const formData = new FormData();
+    if (file) {
+      formData.append('file', file);
+    }
+    if (name) {
+      formData.append('name', name);
+    }
+
+    const response = await fetch(`${API_URL}chat/groups/${groupId}`, {
+      method: 'PATCH',
+      headers: {
+        'Authorization': `Bearer ${idToken}`
+      },
+      body: formData
+    });
+    
+    if (!response.ok) throw new Error('Failed to update group');
+    return await response.json();
+  } catch (error) {
+    console.error('Error updating group:', error);
+    return { success: false, error };
+  }
+};
+
 export interface GroupMember {
   uid: string;
   email: string;
@@ -98,7 +142,7 @@ export interface GroupMember {
 
 export const getGroupMembers = async (groupId: string, idToken: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/api/chat/members?groupId=${groupId}`, {
+    const response = await fetch(`${API_URL}chat/members?groupId=${groupId}`, {
       headers: {
         'Authorization': `Bearer ${idToken}`
       }
@@ -113,7 +157,7 @@ export const getGroupMembers = async (groupId: string, idToken: string) => {
 
 export const addGroupMember = async (groupId: string, email: string, idToken: string) => {
   try {
-    const response = await fetch('http://localhost:3000/api/chat/members', {
+    const response = await fetch(`${API_URL}chat/members`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,3 +172,37 @@ export const addGroupMember = async (groupId: string, email: string, idToken: st
     return { success: false, error };
   }
 };
+
+export const leaveGroup = async (groupId: string, idToken: string) => {
+  try {
+    const response = await fetch(`${API_URL}chat/members?groupId=${groupId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${idToken}`,
+      },
+    });
+    if (!response.ok) throw new Error('Failed to leave group');
+    return await response.json();
+  } catch (error) {
+    console.error('Error leaving group', error);
+    return { success: false, error };
+  }
+};
+
+export interface Group {
+  id: string;
+  name: string;
+  profileUrl?: string;
+  createdAt: Date;
+  createdBy: string;
+  admins: string[];
+  members: string[];
+  lastMessage?: {
+    text: string;
+    timestamp: Date;
+    sender: string;
+    fileName?: string;
+    fileType?: string;
+    isFile?: boolean;
+  };
+}

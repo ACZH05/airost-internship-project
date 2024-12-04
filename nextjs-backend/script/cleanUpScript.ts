@@ -17,10 +17,31 @@ export async function cleanupExpiredCodes() {
   console.log('Expired OOB codes cleaned up');
 }
 
-// Run cleanup immediately when server starts
-cleanupExpiredCodes().catch(console.error);
+export async function cleanupExpiredPasswordResetCodes() {
+  const now = Timestamp.now().toMillis();
+  const snapshot = await adminFirestore.collection('emailPasswordReset')
+    .where('createdAt', '<', Timestamp.fromMillis(now - 24 * 60 * 60 * 1000))  // 24 hours in milliseconds
+    .get();
 
-// Schedule cleanup to run daily at midnight
+  const batch = adminFirestore.batch();
+  snapshot.forEach(doc => {
+    batch.delete(doc.ref);
+  });
+
+  await batch.commit();
+  console.log('Expired password reset codes cleaned up');
+}
+
+// Run both cleanups immediately when server starts
+Promise.all([
+  cleanupExpiredCodes(),
+  cleanupExpiredPasswordResetCodes()
+]).catch(console.error);
+
+// Schedule both cleanups to run daily at midnight
 cron.schedule('0 0 * * *', async () => {
-  await cleanupExpiredCodes().catch(console.error);
+  await Promise.all([
+    cleanupExpiredCodes(),
+    cleanupExpiredPasswordResetCodes()
+  ]).catch(console.error);
 });

@@ -12,7 +12,6 @@ import ResetPasswordPage from "./pages/ForgetPasswordPage/ResetPasswordPage";
 import ConfirmationPage from "./pages/RegisterPage/ConfirmationPage";
 import SetupPage from "./pages/RegisterPage/SetupPage";
 import VerifyPage from "./pages/RegisterPage/VerifyPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import MainPage from "./pages/MainPage/MainPage";
 import DeleteUsersPage from "./pages/DebugPage/DeleteUsersPage";
 import VideoCallPage from "./pages/DebugPage/VideoCallPage";
@@ -28,7 +27,7 @@ const App = () => {
               <Route path="/forgetPassword" element={<ForgetPasswordPage />} />
               <Route path="/reset" element={<ResetPasswordPage />} />
 
-              <Route path="/delete-uers" element={<DeleteUsersPage />} />
+              <Route path="/delete-users" element={<DeleteUsersPage />} />
 
               {/* Public/Auth Routes */}
               <Route element={<PublicRoute />}>
@@ -41,7 +40,6 @@ const App = () => {
               {/* Protected Routes (requires full auth) */}
               <Route element={<ProtectedRoute />}>
                 <Route path="/" element={<MainPage />} />
-                <Route path="/profile" element={<ProfilePage />} />
                 <Route path="/video-call" element={<VideoCallPage />} />
                 <Route path="/video-call/:callId" element={<VideoCallPage />} />
               </Route>

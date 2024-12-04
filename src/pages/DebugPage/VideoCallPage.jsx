@@ -18,6 +18,7 @@ import LoadingScreen from '../../components/LoadingScreen';
 import { customTheme } from './videoTheme';
 
 const apiKey = import.meta.env.VITE_STREAMIO_API_KEY;
+const API_URL = import.meta.env.VITE_API_URL
 
 function VideoCallPage() {
     const navigate = useNavigate();
@@ -42,7 +43,7 @@ function VideoCallPage() {
         const getToken = async () => {
             try {
                 const idToken = await user.getIdToken();
-                const response = await fetch('http://localhost:3000/api/video/generate-token', {
+                const response = await fetch(`${API_URL}video/generate-token`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -74,7 +75,7 @@ function VideoCallPage() {
                 user: { 
                     id: streamUserId,
                     name: profile?.username || user.displayName || streamUserId,
-                    image: profile?.profilePicture || 'src/assets/Default_pfp.svg' // Change profilePictureUrl to image
+                    image: profile?.profilePicture || 'https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d'
                 },
                 token,
             });
@@ -144,7 +145,7 @@ function CallUI() {
                     const profile = await getProfile(participant.userId, idToken);
                     profileData[participant.userId] = profile || {
                         username: participant.name || participant.userId,
-                        profilePicture: 'src/assets/Default_pfp.svg'
+                        profilePicture: 'https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d'
                     };
                 }
                 setProfiles(profileData);
@@ -173,7 +174,7 @@ function CallUI() {
                             <div className="absolute bottom-2 left-2 flex items-center bg-black/50 px-2 py-1 rounded">
                                 <div className="w-6 h-6 rounded-full overflow-hidden">
                                     <img 
-                                        src={props.participant.image || 'src/assets/Default_pfp.svg'} 
+                                        src={props.participant.image || 'https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d'} 
                                         alt=""
                                         className="w-full h-full object-cover"
                                     />

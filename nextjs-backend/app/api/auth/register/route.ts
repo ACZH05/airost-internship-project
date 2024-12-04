@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-export async function POST(req: NextRequest, res:NextResponse) {
+export async function POST(req: NextRequest) {
     const { idToken, email } = await req.json();
 
     try {
@@ -23,9 +23,7 @@ export async function POST(req: NextRequest, res:NextResponse) {
       return new NextResponse(response, {status:200});
     } catch (error) {
       console.error('Error verifying ID token or adding user: ', error);
-
-      const reserror = JSON.stringify({ error: 'Internal Server Error' })
-      return NextResponse.json(reserror, {status:500});
+      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
     }
 }
 

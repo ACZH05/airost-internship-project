@@ -4,7 +4,9 @@ import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-export async function GET(req: NextRequest, { params }: { params: { userId: string } }) {
+export async function GET(
+    req: NextRequest, 
+    { params }: { params: Promise<{ userId: string }> }) {
     try {
         const {userId} = await params;
         const authHeader = req.headers.get('authorization');
