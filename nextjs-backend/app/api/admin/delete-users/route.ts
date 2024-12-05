@@ -24,7 +24,7 @@ export async function DELETE(req: NextRequest) {
             let batch = adminFirestore.batch();
             let operationCount = 0;
 
-            // If this is the users collection, delete nested profile collections first
+            // Delete nested profile collections first
             if (collectionName === 'users') {
                 for (const doc of snapshot.docs) {
                     const profileSnapshot = await adminFirestore

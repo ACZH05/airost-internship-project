@@ -73,7 +73,6 @@ function ChatTab({ groupId }) {
           }
           if (messagesResult.success) {
             setMessages(messagesResult.messages);
-            // Only instant scroll on first load
             if (firstLoadRef.current) {
               messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
               firstLoadRef.current = false;

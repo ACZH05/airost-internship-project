@@ -15,7 +15,7 @@ export async function GET(request: NextRequest) {
         }
 
         const token = authHeader.split('Bearer ')[1];
-        await adminAuth.verifyIdToken(token); // Just verify, don't store result
+        await adminAuth.verifyIdToken(token);
 
         // Query files for the user
         const filesSnapshot = await adminFirestore

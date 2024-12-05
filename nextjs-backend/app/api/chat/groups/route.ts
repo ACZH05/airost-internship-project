@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 const db = adminFirestore;
 
-// Get groups for a user
 export async function GET(req: NextRequest) {
     try {
         const authHeader = req.headers.get('authorization');
@@ -33,7 +32,6 @@ export async function GET(req: NextRequest) {
             let lastMessage = null;
             if (!lastMessageQuery.empty) {
                 const messageData = lastMessageQuery.docs[0].data();
-                // Get sender's profile and info
                 const senderProfile = await db.collection('profiles')
                     .doc(messageData.userId)
                     .get();
@@ -96,14 +94,13 @@ export async function POST(req: NextRequest) {
         const token = authHeader.split('Bearer ')[1];
         const decodedToken = await adminAuth.verifyIdToken(token);
 
-        // Create new group with default profile
         const groupRef = await db.collection('groups').add({
             name,
             createdBy: decodedToken.uid,
             createdAt: new Date(),
             members: [decodedToken.uid],
             admins: [decodedToken.uid],
-            profileUrl: null // You can set a default profile URL here
+            profileUrl: null 
         });
 
         return NextResponse.json({ 

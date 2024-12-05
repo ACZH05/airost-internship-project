@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
             success: true,
             message: 'Message sent successfully',
             messageId: messageRef.id,
-            fileId: fileMetadata?.id  // Changed from fileId to id
+            fileId: fileMetadata?.id  
         });
     } catch (error) {
         console.error('Error processing message:', error);
