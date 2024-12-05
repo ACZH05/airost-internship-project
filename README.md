@@ -1,8 +1,16 @@
-# React + Vite
+# Remote Work Management Web App
+This is the submission of Team Alto's Internship Project to AIROST.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Introduction
+An all in one platform for easy remote work management. 
 
-Currently, two official plugins are available:
+# Main Functions
+- Chat Message
+- File Uploading & Listing
+- To Do List
+- Video Call
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# Frontend & Backend
+The root folder is the source code for Frontend.
+
+`/nextjs-backend/` is the source code folder for Backend.
