@@ -1,6 +1,10 @@
 # Remote Work Management Web App
 This is the submission of Team Alto's Internship Project to AIROST.
 
+# Team Alto
+- Alfred Chin Zhan Hoong
+- Hoe Zhi Wan
+
 # Introduction
 An all in one platform for easy remote work management. 
 
