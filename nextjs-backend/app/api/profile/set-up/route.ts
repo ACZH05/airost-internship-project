@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
       const decodedToken = await adminAuth.verifyIdToken(idToken);
       const uid = decodedToken.uid;
 
-      // Create a batch write
       const batch = db.batch();
 
       // Update the user document
@@ -31,7 +30,6 @@ export async function POST(req: NextRequest) {
         createdAt: new Date()
       });
 
-      // Commit the batch
       await batch.commit();
 
       return new NextResponse(

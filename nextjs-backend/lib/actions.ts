@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer';
 const db = adminFirestore
 
 export async function generateOOBCode(email: string, uid:string) { 
-  const oobCode = uuidv4(); // Generate a unique code await
+  const oobCode = uuidv4(); 
   const expiryDuration = 1 * 60 * 60 * 1000; 
 
   console.log(oobCode);
@@ -39,7 +39,7 @@ export async function sendVerificationEmail(email: string, oobCode: string) {
 }
 
 export async function generateResetCode(email: string) { 
-  const resetCode = uuidv4(); // Generate a unique code await
+  const resetCode = uuidv4(); 
   const expiryDuration = 1 * 60 * 60 * 1000; 
 
   console.log(resetCode);

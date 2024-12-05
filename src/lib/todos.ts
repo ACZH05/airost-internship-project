@@ -7,7 +7,7 @@ export interface Todo {
   groupId: string;
   status: 'pending' | 'process' | 'completed';
   timestamp: Date;
-  assignedTo?: string[]; // Add this field
+  assignedTo?: string[]; 
 }
 
 export const sendTodo = async (text: string, groupId: string, idToken: string) => {

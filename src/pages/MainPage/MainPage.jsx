@@ -8,106 +8,6 @@ import TodoTab from "../../components/Todo/TodoTab";
 import FileTab from "../../components/FileTab";
 import { useProfiles } from '../../contexts/ProfileContext';
 import GroupDropDownComponent from "../../components/GroupDropDownComponent";
-import { getProfileInfo, updateProfilePicture } from "../../lib/action";
-
-function ProfileModal({ onClose }) {
-  const { user } = useAuth();
-  const [profile, setProfile] = useState(null);
-  const fileInputRef = useRef(null);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (user) {
-        const idToken = await user.getIdToken();
-        const result = await getProfileInfo(idToken);
-        if (result.success) {
-          setProfile(result.profile);
-        }
-      }
-    };
-    fetchProfile();
-  }, [user]);
-
-  const handlePictureUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    if (file.size > 5 * 1024 * 1024) {
-      alert('File size must be less than 5MB');
-      return;
-    }
-
-    const idToken = await user.getIdToken();
-    const result = await updateProfilePicture(idToken, file);
-    
-    if (result.success) {
-      setProfile(prev => ({
-        ...prev,
-        profilePictureUrl: result.profilePictureUrl 
-      }));
-    } else {
-      alert(result.message);
-    }
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
-      <div className="bg-shade-300 p-6 rounded-lg max-w-md w-full">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-bold">Profile</h2>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        
-        {profile ? (
-          <div className="space-y-4">
-            <div className="flex flex-col items-center">
-              <div className="relative">
-                <img
-                  src={profile.profilePictureUrl || "https://utfs.io/f/n1CDOLNQtUGkbe4jZjaeEsrGvpiUFQC7x2mYJ0jR4DMktw1d"}
-                  alt="Profile"
-                  className="w-32 h-32 rounded-full object-cover"
-                />
-                <button
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute bottom-0 right-0 bg-primary hover:bg-primary/80 text-white p-2 rounded-full"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
-                  </svg>
-                </button>
-                <input
-                  ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
-                  className="hidden"
-                  onChange={handlePictureUpload}
-                />
-              </div>
-            </div>
-            <div>
-              <p className="text-gray-400">Name</p>
-              <p className="font-medium">{profile.firstName} {profile.lastName}</p>
-            </div>
-            <div>
-              <p className="text-gray-400">Phone</p>
-              <p className="font-medium">{profile.areaCode} {profile.phoneNumber}</p>
-            </div>
-            <div>
-              <p className="text-gray-400">Email</p>
-              <p className="font-medium">{user.email}</p>
-            </div>
-          </div>
-        ) : (
-          <div className="text-center py-4">Loading profile...</div>
-        )}
-      </div>
-    </div>
-  );
-}
 
 function NavBar({ groupName, activeTab, setActiveTab, showMember, setShowMember, onVideoCall }) {
   return (
@@ -534,7 +434,7 @@ function MainPage() {
   }, [groups, user]);
 
   useEffect(() => {
-    console.log(activeTab)
+    // console.log(activeTab)
   }, [activeTab]);
 
   const renderView = () => {

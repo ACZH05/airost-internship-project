@@ -31,17 +31,3 @@ export async function cleanupExpiredPasswordResetCodes() {
   await batch.commit();
   console.log('Expired password reset codes cleaned up');
 }
-
-// Run both cleanups immediately when server starts
-Promise.all([
-  cleanupExpiredCodes(),
-  cleanupExpiredPasswordResetCodes()
-]).catch(console.error);
-
-// Schedule both cleanups to run daily at midnight
-cron.schedule('0 0 * * *', async () => {
-  await Promise.all([
-    cleanupExpiredCodes(),
-    cleanupExpiredPasswordResetCodes()
-  ]).catch(console.error);
-});

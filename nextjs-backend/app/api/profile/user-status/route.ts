@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
         // Verify the ID token
         const decodedToken = await adminAuth.verifyIdToken(idToken);
 
-        // Get user document from Firestore
         const userDoc = await db.collection('users').doc(decodedToken.uid).get();
         const userData = userDoc.data();
 

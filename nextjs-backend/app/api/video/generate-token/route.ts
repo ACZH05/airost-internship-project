@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
         const decodedToken = await adminAuth.verifyIdToken(token);
         const userId = decodedToken.uid;
 
-        // Generate Stream token - only pass userId
+        // Generate Stream token
         const streamToken = serverClient.createToken(userId);
         
         return NextResponse.json({ 

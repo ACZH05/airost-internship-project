@@ -104,7 +104,6 @@ function TodoTab({ groupId }) {
         const result = await sendTodo(newTodo, groupId, idToken)
         
         if (result.success) {
-          // Add new todo to pending list
           setList(prev => ({
             ...prev,
             pending: [...prev.pending, {
@@ -133,13 +132,11 @@ function TodoTab({ groupId }) {
             // Update state optimistically
             setList(newClass)
 
-            // Update in backend
             if (sourceId !== destinationId) {
                 const idToken = await user.getIdToken()
                 const result = await updateTodoStatus(movedItem.id, destinationId, idToken)
                 
                 if (!result.success) {
-                    // Revert changes if update fails
                     const revertedList = {...list}
                     const [revertItem] = revertedList[destinationId].splice(destinationIndex, 1)
                     revertedList[sourceId].splice(sourceIndex, 0, revertItem)
@@ -158,7 +155,6 @@ function TodoTab({ groupId }) {
         const result = await deleteTodo(todoId, idToken);
         
         if (result.success) {
-            // Update lists by removing the deleted todo
             setList(prev => {
                 const newList = { ...prev };
                 ['pending', 'process', 'completed'].forEach(status => {

@@ -88,7 +88,6 @@ function FileTab({ groupId }) {
             setFiles(data.files);
         } catch (err) {
             console.error('Error fetching files:', err);
-            // Optionally set an error state here
         }
     };
 
@@ -386,7 +385,7 @@ function FileTab({ groupId }) {
                                     <div className="relative menu-container ml-4">
                                         <button
                                             onClick={(e) => {
-                                                e.stopPropagation();  // Add this line
+                                                e.stopPropagation(); 
                                                 setActiveMenu(activeMenu === file.id ? null : file.id);
                                             }}
                                             className="p-2 hover:bg-gray-100 rounded"

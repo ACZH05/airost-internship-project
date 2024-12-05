@@ -10,16 +10,16 @@ function ConfirmationPage() {
   const [isSending, setIsSending] = useState(false);
   const navigate = useNavigate();
 
-  console.log('Component mounted');
-  console.log('Auth state:', { user, loading });
+  // console.log('Component mounted');
+  // console.log('Auth state:', { user, loading });
 
   useEffect(() => {
     if (!loading) {
       if (!user) {
-        console.log('No user, redirecting to login');
+        // console.log('No user, redirecting to login');
         navigate('/login');
       } else if (user.emailVerified) {
-        console.log('Email verified, redirecting to set up profile');
+        // console.log('Email verified, redirecting to set up profile');
         navigate('/setup-profile');
       }
     }

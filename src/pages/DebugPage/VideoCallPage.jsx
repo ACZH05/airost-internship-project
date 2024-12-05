@@ -12,7 +12,7 @@ import {
     CallControls
 } from '@stream-io/video-react-sdk';
 import '@stream-io/video-react-sdk/dist/css/styles.css';
-import './videoCall.css';  // Add this import
+import './videoCall.css';  
 import { useProfiles } from '../../contexts/ProfileContext';
 import LoadingScreen from '../../components/LoadingScreen';
 import { customTheme } from './videoTheme';

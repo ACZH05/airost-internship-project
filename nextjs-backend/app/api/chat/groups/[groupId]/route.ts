@@ -31,8 +31,6 @@ export async function PATCH(
             return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
         }
 
-        const file = formData.get('file') as File;
-
         if (formData.has('name')) {
             await db.collection('groups').doc(groupId).update({
                 name:formData.get('name')

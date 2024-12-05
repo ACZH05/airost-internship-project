@@ -29,7 +29,7 @@ export const registerUser = async (email: string, password: string, confirmPassw
 
   try {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    console.log('User has been signed up');
+    // console.log('User has been signed up');
 
     const idToken = await userCredential.user.getIdToken();
     const response = await fetch(`${API_URL}auth/register`,
@@ -44,7 +44,7 @@ export const registerUser = async (email: string, password: string, confirmPassw
     }
 
     const data = await response.json();
-    console.log('User registered and data sent to API', data);
+    // console.log('User registered and data sent to API', data);
 
     try {
       emailVerification(userCredential);
@@ -55,11 +55,8 @@ export const registerUser = async (email: string, password: string, confirmPassw
     return { success: true, data };
 
   } catch (error) {
-    // Extract error code 
     const errorCode = error['code'];
-    // Get user-friendly error message 
     const errorMessage = errorMessages[errorCode as keyof typeof errorMessages] || 'An unknown error occurred. Please try again.';
-    // Display the error message 
     console.error("Issue sigining in with Email", error);
 
     console.error('Error registering user: ', error);
@@ -84,7 +81,7 @@ export const loginUser = async (email: string, password: string) => {
 
   try {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    console.log('User has been signed in')
+    // console.log('User has been signed in')
     const idToken = await userCredential.user.getIdToken();
 
     const response = await fetch(`${API_URL}auth/login`,
@@ -95,21 +92,18 @@ export const loginUser = async (email: string, password: string) => {
       });
 
     if (!response.ok) {
-      console.log(response);
+      // console.log(response);
       throw new Error('Issue connecting with API');
     }
 
     const data = await response.json();
-    console.log('User log ined and data sent to API', data);
+    // console.log('User log ined and data sent to API', data);
 
     return { success: true, message: data.message, idToken};
 
   } catch (error) {
-    // Extract error code 
     const errorCode = error['code'];
-    // Get user-friendly error message 
     const errorMessage = errorMessages[errorCode as keyof typeof errorMessages] || 'An unknown error occurred. Please try again.';
-    // Display the error message 
     console.error("Issue logging with Email", error);
 
     console.error('Error logging in user: ', error);
@@ -131,12 +125,12 @@ export const emailVerification = async (userCredential) => {
       });
 
     if (!response.ok) {
-      console.log(response);
+      // console.log(response);
       throw new Error('Issue connecting with API');
     }
 
     const data = await response.json();
-    console.log("Succeeded in sending email verification", data);
+    // console.log("Succeeded in sending email verification", data);
   } catch (error) {
     console.error('Error sending verfication email', error);
   }
