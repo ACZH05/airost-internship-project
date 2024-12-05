@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getGroups, createGroup, getGroupMembers, addGroupMember, getLastMessage, updateGroup, leaveGroup } from "../../lib/chat";
 import ChatTab from "../../components/Chat/ChatTab";
@@ -504,12 +504,22 @@ function MainPage() {
                     </div>
                   )}
                   <div className="flex-grow min-w-0"> 
-                    <div className="font-bold truncate">{group.name}</div>
+                    <div className="flex justify-between items-baseline">
+                      <div className="font-bold ">{group.name}</div>
+                      {lastMessages[group.id] && (
+                        <div className="text-xs text-gray-400 whitespace-nowrap">
+                          {new Date(lastMessages[group.id].timestamp.seconds * 1000).toLocaleTimeString([], { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          })}
+                        </div>
+                      )}
+                    </div>
                     {lastMessages[group.id] && (
-                      <div className="text-sm text-gray-400 truncate flex gap-1">
-                        <span className="font-medium truncate max-w-[80px]">{lastMessages[group.id].sender}:</span>
+                      <div className="text-sm text-gray-400 truncate flex gap-1 w-[240px]">
+                        <span className="font-medium">{lastMessages[group.id].sender}:</span>
                         {lastMessages[group.id].isFile ? (
-                          <div className="flex items-center gap-1 truncate">
+                          <div className="flex items-center gap-1 truncate w-full">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
                               <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15ZM1.5 10.146V6a3 3 0 0 1 3-3h5.379a2.25 2.25 0 0 1 1.59.659l2.122 2.121c.14.141.331.22.53.22H19.5a3 3 0 0 1 3 3v1.146A4.483 4.483 0 0 0 19.5 9h-15a4.483 4.483 0 0 0-3 1.146Z" />
                             </svg>
@@ -521,14 +531,6 @@ function MainPage() {
                       </div>
                     )}
                   </div>
-                  {lastMessages[group.id] && (
-                    <div className="text-xs text-gray-400 whitespace-nowrap">
-                      {new Date(lastMessages[group.id].timestamp.seconds * 1000).toLocaleTimeString([], { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })}
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
