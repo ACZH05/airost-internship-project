@@ -9,15 +9,6 @@ function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigate('/confirm');
-      }
-    });
-    return () => unsubscribe();
-  }, [navigate]);
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
@@ -31,6 +22,7 @@ function RegisterPage() {
       if (result.success) {
         setMessage('Registration successful');
         setErrors({});
+        navigate('/confirm');
 
       } else if (result.errors) {
         setErrors(result.errors);

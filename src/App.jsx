@@ -29,10 +29,11 @@ const App = () => {
 
               <Route path="/delete-users" element={<DeleteUsersPage />} />
 
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+
               {/* Public/Auth Routes */}
               <Route element={<PublicRoute />}>
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/register" element={<RegisterPage />} />
                 <Route path="/confirm" element={<ConfirmationPage />} />
                 <Route path="/setup-profile" element={<SetupPage />} />
               </Route>
